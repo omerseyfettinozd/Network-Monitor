@@ -1,6 +1,7 @@
+/target
+**/*.rs.bk
+*.pdb
+.DS_Store
+Thumbs.db
 __pycache__/
-*.py[cod]
-*$py.class
-*.log
-.vscode/
-.idea/
+*.pyc

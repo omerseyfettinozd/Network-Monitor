@@ -1,54 +1,76 @@
-# 🌐 Network Monitor / Ağ Monitörü
+# Network Monitor v2.0
 
-A stylish, floating network monitor application written in Python. It shows your real-time upload/download speeds and total session usage in a modern, frameless window.
+A lightweight, cross-platform floating network speed monitor rewritten from scratch in **Rust** (`eframe`/`egui` + `sysinfo`). Works out of the box on **Windows** and **Linux** (Wayland & X11) as a single standalone executable — no Python, WebView, or runtime installation required.
 
-Python ile yazılmış şık, yüzen bir ağ monitörü uygulaması. Modern ve çerçevesiz bir pencerede anlık yükleme/indirme hızlarınızı ve toplam oturum kullanımınızı gösterir.
+**Rust** ile sıfırdan yazılmış, hafif ve çapraz platform (Windows & Linux) yüzen ağ monitörü. Tek çalıştırılabilir dosya ile kurulumsuz ve tek tıkla açılır.
 
-![Network Monitor](https://github.com/omerseyfettinozd/Network-Monitor/assets/image-placeholder.png)
+---
 
-## ✨ Features / Özellikler
+## Features / Özellikler
 
-*   **Real-time Speed / Anlık Hız**: View upload and download speeds in KB/s. (Yükleme ve indirme hızlarını KB/s cinsinden görüntüleyin.)
-*   **Session Totals / Oturum Toplamları**: Track total data usage since launch. (Başlangıçtan bu yana toplam veri kullanımını takip edin.)
-*   **Custom UI / Özel Arayüz**: 
-    *   Frameless & Rounded corners (Çerçevesiz ve Yuvarlak köşeler)
-    *   Transparent background (Saydam arka plan)
-    *   "Always on Top" (Her zaman üstte)
-*   **Draggable / Sürüklenebilir**: Click anywhere to move the window. (Pencereyi taşımak için herhangi bir yere tıklayın.)
+- **Zero-Dependency Single Binary / Tek Tıkla Çalışır**: Standalone `.exe` on Windows (no console window) and native binary on Linux.
+- **Live Dual Sparkline / Canlı Grafik**: Smooth 60-sample download & upload area chart with dynamic scaling and hover tooltips.
+- **Two View Modes / İki Görünüm Modu**:
+  - **Card Mode**: Download/Upload cards, peak speeds, live sparkline, and session totals.
+  - **Compact Pill Mode**: Minimal single-line floating bar (`↓ 12.4 MB/s | ↑ 1.8 MB/s`) ideal while gaming or coding.
+- **4 Built-in Themes / 4 Yerleşik Tema**:
+  - `Obsidian Glass` — Modern translucent dark glass
+  - `Nord Frost` — Clean Nord desktop palette
+  - `Earth Classic` — Modern tribute to the v1.0 earthy brown palette
+  - `Cyber Pulse` — High-contrast neon purple & cyan
+- **Smart Interface Filter / Arayüz Seçimi**: Monitor `All Physical` (excludes loopback/docker/veth by default), `All Interfaces`, or any specific NIC (`wlan0`, `eth0`, `Wi-Fi`, `Ethernet`, etc.).
+- **Customizable & Persistent / Kalıcı Ayarlar**: Byte/s (`MB/s`) or Bit/s (`Mbps`), opacity slider, always-on-top toggle, refresh rate (`0.5s` / `1s` / `2s`), and saved window position.
 
-## 🛠️ Requirements / Gereksinimler
+---
 
-*   Python 3.x
-*   `psutil` library
+## Download (One-Click) / Tek Tıkla İndirme
 
-## 🚀 Installation & Usage / Kurulum ve Kullanım
+Grab the latest prebuilt binary from the **[GitHub Releases](https://github.com/omerseyfettinozd/Network-Monitor/releases)** page:
 
-1.  **Clone the repo / Depoyu klonlayın**:
-    ```bash
-    git clone https://github.com/omerseyfettinozd/Network-Monitor.git
-    cd Network-Monitor
-    ```
+- **Windows (x64):** Download `network-monitor-windows-x86_64.exe` and double-click to launch.
+- **Linux (x64):** Download `network-monitor-linux-x86_64`, mark executable (`chmod +x network-monitor-linux-x86_64`), and run.
 
-2.  **Install dependencies / Bağımlılıkları yükleyin**:
-    ```bash
-    pip install psutil
-    ```
+---
 
-3.  **Run the app / Uygulamayı çalıştırın**:
-    ```bash
-    python network_monitor.py
-    ```
+## Keyboard Shortcuts / Klavye Kısayolları
 
-## 🎨 Color Palette / Renk Paleti
+| Key | Action / İşlev |
+|---|---|
+| `M` | Toggle Card / Compact Pill mode |
+| `T` | Cycle themes |
+| `R` | Reset session totals & peak speeds |
+| `S` | Toggle Settings panel |
+| `Esc` | Close Settings panel |
 
-The design uses a custom earthy color palette:
-Tasarım özel bir toprak rengi paleti kullanır:
+Drag anywhere on the widget background to move it freely.
 
-*   **Background**: `#33240D` (Deep Brown)
-*   **Text**: `#CAC2B3` (Light Beige)
-*   **Highlight**: `#F4DAB0` (Cream)
-*   **Accent**: `#756244` (Medium Brown)
+---
 
-## 📝 License / Lisans
+## Build from Source / Kaynak Koddan Derleme
 
-Free to use! / Kullanımı ücretsizdir!
+### Prerequisites
+- Rust toolchain (`rustup` / `cargo`)
+- **Linux only:** X11 / Wayland / OpenGL dev libraries (`libgl-dev`, `libx11-dev`, `libwayland-dev`, `libxkbcommon-dev`)
+
+```bash
+git clone https://github.com/omerseyfettinozd/Network-Monitor.git
+cd Network-Monitor
+cargo build --release
+./target/release/network-monitor
+```
+
+Cross-compile for Windows from Linux (requires `x86_64-pc-windows-gnu` target & `mingw-w64`):
+
+```bash
+cargo build --release --target x86_64-pc-windows-gnu
+```
+
+---
+
+## Legacy v1.0
+
+The original Python/Tkinter version is archived in [`legacy/network_monitor.py`](legacy/network_monitor.py).
+
+## License
+
+MIT
