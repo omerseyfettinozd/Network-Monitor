@@ -567,13 +567,20 @@ impl eframe::App for NetworkMonitorApp {
         egui::CentralPanel::default()
             .frame(outer_frame)
             .show(ctx, |ui| {
+                // Register background drag BEFORE child widgets so buttons/sliders/combos stay on top.
+                let drag_resp = ui.interact(
+                    ui.max_rect(),
+                    ui.id().with("window_drag"),
+                    Sense::drag(),
+                );
+
                 let container = Frame::NONE
                     .fill(palette.bg)
                     .stroke(Stroke::new(1.2_f32, palette.border))
                     .corner_radius(CornerRadius::same(corner_radius))
                     .inner_margin(inner_margin);
 
-                let frame_resp = container.show(ui, |ui| {
+                container.show(ui, |ui| {
                     ui.set_min_size(ui.available_size());
                     if is_compact {
                         self.draw_compact_mode(ui, ctx, &palette);
@@ -582,15 +589,7 @@ impl eframe::App for NetworkMonitorApp {
                     }
                 });
 
-                // Drag window from any non-interactive area
-                let drag_resp = ui.interact(
-                    frame_resp.response.rect,
-                    ui.id().with("window_drag"),
-                    Sense::click_and_drag(),
-                );
-                if drag_resp.drag_started_by(egui::PointerButton::Primary)
-                    && !ctx.is_using_pointer()
-                {
+                if drag_resp.drag_started_by(egui::PointerButton::Primary) {
                     ctx.send_viewport_cmd(ViewportCommand::StartDrag);
                 }
             });

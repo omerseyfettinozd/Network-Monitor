@@ -1,6 +1,6 @@
 [package]
 name = "network-monitor"
-version = "2.0.0"
+version = "2.0.1"
 edition = "2024"
 description = "Cross-platform floating real-time network monitor built with Rust and egui"
 license = "MIT"
