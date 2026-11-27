@@ -568,11 +568,8 @@ impl eframe::App for NetworkMonitorApp {
             .frame(outer_frame)
             .show(ctx, |ui| {
                 // Register background drag BEFORE child widgets so buttons/sliders/combos stay on top.
-                let drag_resp = ui.interact(
-                    ui.max_rect(),
-                    ui.id().with("window_drag"),
-                    Sense::drag(),
-                );
+                let drag_resp =
+                    ui.interact(ui.max_rect(), ui.id().with("window_drag"), Sense::drag());
 
                 let container = Frame::NONE
                     .fill(palette.bg)
